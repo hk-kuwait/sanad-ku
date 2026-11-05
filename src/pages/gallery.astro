@@ -1,12 +1,17 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { supabase } from '../lib/supabase';
+import { localGallery } from '../data/gallery';
 
 let images = [];
 if (supabase) {
   const { data } = await supabase.from('gallery_projects').select('*').order('created_at', { ascending: false });
   images = data || [];
 }
+const all = [
+  ...localGallery,
+  ...images.map((i) => ({ src: i.image_url, title: i.title, alt: i.alt_text || `${i.title} - تنفيذ أصباغ وديكورات في الكويت`, width: 600, height: 400 })),
+];
 ---
 <Layout
   title="معرض أعمال الأصباغ والديكور | شركة سند الكويت"
@@ -15,17 +20,13 @@ if (supabase) {
 >
   <div class="max-w-6xl mx-auto px-4 py-12">
     <h1 class="text-3xl font-extrabold text-slate-900 mb-8 border-r-4 border-amber-500 pr-3">معرض أعمال شركة سند الكويت</h1>
-    {images.length === 0 ? (
-      <div class="bg-white p-8 text-center rounded-xl border border-slate-200 text-slate-500 text-xs">لا توجد صور متاحة حالياً بالمعرض.</div>
-    ) : (
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {images.map((img, i) => (
-          <figure class="bg-white rounded-xl overflow-hidden border border-slate-200 shadow-sm">
-            <img src={img.image_url} alt={img.alt_text || `${img.title} - تنفيذ أصباغ وديكورات في الكويت`} class="w-full h-56 object-cover" width="600" height="400" loading={i < 3 ? 'eager' : 'lazy'} decoding="async" />
-            <figcaption class="p-4 font-bold text-slate-900 text-sm">{img.title}</figcaption>
-          </figure>
-        ))}
-      </div>
-    )}
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      {all.map((img, i) => (
+        <figure class="bg-white rounded-xl overflow-hidden border border-slate-200 shadow-sm">
+          <img src={img.src} alt={img.alt} class="w-full h-56 object-cover" width={img.width} height={img.height} loading={i < 3 ? 'eager' : 'lazy'} decoding="async" />
+          <figcaption class="p-4 font-bold text-slate-900 text-sm">{img.title}</figcaption>
+        </figure>
+      ))}
+    </div>
   </div>
 </Layout>

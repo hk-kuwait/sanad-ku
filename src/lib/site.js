@@ -8,7 +8,8 @@ export const SITE = {
   ogImage: 'https://sanadkw.com/og-image.jpg',
   logo: 'https://sanadkw.com/logo.png',
   // أضف روابط حساباتك الحقيقية هنا (فيسبوك / انستجرام / خرائط جوجل)
-  sameAs: [],
+  sameAs: ['https://www.instagram.com/sanad.kw.co/'],
+  instagram: 'https://www.instagram.com/sanad.kw.co/',
   address: {
     street: 'قطعة 11، شارع شرحبيل، مجمع دلال، مكتب 14',
     locality: 'حولي',
