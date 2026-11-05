@@ -1,0 +1,40 @@
+---
+import { services } from '../data/services';
+import { areas } from '../data/areas';
+---
+<footer class="bg-slate-950 text-slate-400 py-10 border-t border-slate-800 text-xs">
+  <div class="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8">
+    <div>
+      <h2 class="text-amber-400 font-bold text-sm mb-3">خدماتنا</h2>
+      <ul class="space-y-2">
+        {services.map((s) => <li><a href={`/${s.slug}/`} class="hover:text-amber-400">{s.short}</a></li>)}
+      </ul>
+    </div>
+    <div>
+      <h2 class="text-amber-400 font-bold text-sm mb-3">المناطق</h2>
+      <ul class="space-y-2">
+        {areas.map((a) => <li><a href={`/painting-services/${a.slug}/`} class="hover:text-amber-400">صباغ {a.name}</a></li>)}
+      </ul>
+    </div>
+    <div>
+      <h2 class="text-amber-400 font-bold text-sm mb-3">الشركة</h2>
+      <ul class="space-y-2">
+        <li><a href="/about/" class="hover:text-amber-400">من نحن</a></li>
+        <li><a href="/gallery/" class="hover:text-amber-400">معرض الأعمال</a></li>
+        <li><a href="/blog/" class="hover:text-amber-400">المدونة</a></li>
+        <li><a href="/contact/" class="hover:text-amber-400">اتصل بنا</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2 class="text-amber-400 font-bold text-sm mb-3">تواصل</h2>
+      <ul class="space-y-2">
+        <li class="leading-loose">حولي، قطعة 11، شارع شرحبيل، مجمع دلال، مكتب 14</li>
+        <li><a href="tel:65587628" class="hover:text-amber-400">65587628</a></li>
+        <li><a href="https://wa.me/96565587628" target="_blank" rel="noopener noreferrer" class="hover:text-amber-400">واتساب</a></li>
+        <li><a href="/privacy-policy/" class="hover:text-amber-400">سياسة الخصوصية</a></li>
+        <li><a href="/terms-of-service/" class="hover:text-amber-400">شروط الاستخدام</a></li>
+      </ul>
+    </div>
+  </div>
+  <p class="text-center mt-8 text-[11px]">جميع الحقوق محفوظة © 2026 شركة سند الكويت لتشييد المباني وأعمال إنهاء المباني وتجهيزها.</p>
+</footer>

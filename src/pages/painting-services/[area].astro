@@ -1,0 +1,75 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { areas } from '../../data/areas';
+import { services } from '../../data/services';
+import { SITE, waLink } from '../../lib/site';
+import { areaExtra } from '../../data/areaExtra';
+import { serviceSchema, faqSchema } from '../../lib/seo';
+
+export function getStaticPaths() {
+  return areas.map((a) => ({ params: { area: a.slug }, props: { a } }));
+}
+const { a } = Astro.props;
+const ex = areaExtra[a.slug];
+const path = `/painting-services/${a.slug}/`;
+const desc = `خدمات صباغة المنازل والديكور في ${a.name} بالكويت: ${a.neighborhoods.slice(0, 4).join('، ')} وغيرها. معاينة مجانية.`;
+---
+<Layout
+  title={`صباغ ${a.name} | أصباغ وديكور ومعاينة مجانية | سند الكويت`}
+  description={desc}
+  schema={[serviceSchema(`صباغ في ${a.name}`, desc, path), faqSchema(a.faqs)]}
+  breadcrumbItems={[{ name: 'صباغ الكويت', url: '/painting-services/' }, { name: `صباغ ${a.name}`, url: path }]}
+>
+  <article class="max-w-4xl mx-auto px-4 py-12 space-y-8">
+    <header class="space-y-4">
+      <span class="text-amber-700 font-bold text-xs bg-amber-50 px-3 py-1 rounded-full">خدمات محلية</span>
+      <h1 class="text-3xl font-extrabold text-slate-900">صباغ منازل في {a.name} - الكويت</h1>
+      <p class="text-slate-700 text-sm leading-loose">{a.intro}</p>
+      <div class="flex flex-col sm:flex-row gap-3">
+        <a href={`tel:${SITE.phone}`} class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-6 py-3 rounded-xl text-sm text-center">اتصل الآن: {SITE.phone}</a>
+        <a href={waLink(`السلام عليكم، أرغب بمعاينة مجانية في ${a.name}`)} target="_blank" rel="noopener noreferrer" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-6 py-3 rounded-xl text-sm text-center">طلب معاينة عبر واتساب</a>
+      </div>
+    </header>
+
+    <section class="bg-white p-6 rounded-2xl border border-slate-200 space-y-3">
+      <h2 class="text-xl font-extrabold text-slate-900">المناطق التي نغطيها في {a.name}</h2>
+      <p class="text-sm text-slate-700 leading-loose">{a.neighborhoods.join('، ')}.</p>
+    </section>
+
+    <section class="bg-white p-6 rounded-2xl border border-slate-200 space-y-3">
+      <h2 class="text-xl font-extrabold text-slate-900">طبيعة الأعمال المطلوبة في {a.name}</h2>
+      <p class="text-sm text-slate-700 leading-loose">{a.typical}</p>
+      <p class="text-sm text-slate-700 leading-loose">{a.issues}</p>
+    </section>
+
+    <section class="bg-white p-6 rounded-2xl border border-slate-200 space-y-3">
+      <h2 class="text-xl font-extrabold text-slate-900">نصائح لصباغة منزلك في {a.name}</h2>
+      <p class="text-sm text-slate-700 leading-loose">{ex.tips}</p>
+    </section>
+
+    <section class="bg-white p-6 rounded-2xl border border-slate-200 space-y-3">
+      <h2 class="text-xl font-extrabold text-slate-900">خدماتنا ومكتبنا</h2>
+      <p class="text-sm text-slate-700 leading-loose">{ex.services}</p>
+      <p class="text-sm text-slate-700 leading-loose">عنوان المكتب: {SITE.address.full}.</p>
+    </section>
+
+    <section>
+      <h2 class="text-xl font-extrabold text-slate-900 mb-4">أسئلة شائعة عن الصباغ في {a.name}</h2>
+      <div class="space-y-3">
+        {a.faqs.map((f) => (
+          <details class="bg-white p-4 rounded-xl border border-slate-200">
+            <summary class="cursor-pointer"><h3 class="inline font-bold text-sm text-slate-900">{f.q}</h3></summary>
+            <p class="text-sm text-slate-700 leading-loose mt-2">{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section>
+      <h2 class="text-xl font-extrabold text-slate-900 mb-4">خدماتنا في {a.name}</h2>
+      <div class="grid sm:grid-cols-3 gap-3">
+        {services.map((s) => <a href={`/${s.slug}/`} class="bg-white p-4 rounded-xl border border-slate-200 hover:border-amber-400 text-sm font-bold">{s.short}</a>)}
+      </div>
+    </section>
+  </article>
+</Layout>

@@ -1,0 +1,19 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ServicePage from '../components/ServicePage.astro';
+import { services } from '../data/services';
+import { serviceSchema, faqSchema } from '../lib/seo';
+
+export function getStaticPaths() {
+  return services.map((s) => ({ params: { service: s.slug }, props: { s } }));
+}
+const { s } = Astro.props;
+---
+<Layout
+  title={s.title}
+  description={s.description}
+  schema={[serviceSchema(s.name, s.description, `/${s.slug}/`), faqSchema(s.faqs)]}
+  breadcrumbItems={[{ name: s.short, url: `/${s.slug}/` }]}
+>
+  <ServicePage s={s} />
+</Layout>

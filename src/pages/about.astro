@@ -1,0 +1,30 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { services } from '../data/services';
+import { SITE } from '../lib/site';
+---
+<Layout
+  title="من نحن | شركة سند الكويت للأصباغ والديكور"
+  description="تعرف على شركة سند الكويت لتشييد وتجهيز المباني، التزامنا بالجودة، وخدماتنا الشاملة بالمحافظات."
+  breadcrumbItems={[{ name: 'من نحن', url: '/about/' }]}
+>
+  <div class="max-w-3xl mx-auto px-4 py-12 space-y-6">
+    <h1 class="text-3xl font-extrabold text-slate-900 border-r-4 border-amber-500 pr-3">من نحن</h1>
+    <p class="text-slate-700 text-sm leading-loose bg-white p-8 rounded-2xl border border-slate-200 shadow-sm">
+      شركة سند الكويت لتشييد المباني وأعمال إنهاء المباني وتجهيزها. نحن شركة كويتية متخصصة في تقديم خدمات الأصباغ والدهانات الداخلية والخارجية، وتركيب بديل الرخام والخشب والجبس بورد. نهدف دائماً لتقديم أعلى مستوى من الجودة والالتزام بالشفافية والمواعيد مع عملائنا الكرام.
+    </p>
+    <section class="bg-white p-6 rounded-2xl border border-slate-200 space-y-3">
+      <h2 class="text-xl font-extrabold text-slate-900">كيف نعمل</h2>
+      <p class="text-slate-700 text-sm leading-loose">نبدأ بمعاينة مجانية نقيس فيها المساحات ونفحص حالة الجدران والأسقف، ثم نقدم لك تقديراً واضحاً للتكلفة والمدة. بعد الاتفاق ننفذ العمل على مراحل مرتبة، ونتابع معك التفاصيل حتى التسليم، ونترك الموقع نظيفاً.</p>
+      <p class="text-slate-700 text-sm leading-loose">نجمع في مكان واحد أعمال الصبغ وورق الجدران وبديل الرخام والخشب والجبس بورد ومعالجة الرطوبة، فلا تحتاج للتنسيق بين عدة جهات، ويبقى الفريق مسؤولاً عن النتيجة النهائية.</p>
+    </section>
+    <section class="bg-white p-6 rounded-2xl border border-slate-200 space-y-3">
+      <h2 class="text-xl font-extrabold text-slate-900">مكتبنا ومناطق خدمتنا</h2>
+      <p class="text-slate-700 text-sm leading-loose">مكتبنا في {SITE.address.full}. نخدم جميع محافظات الكويت: حولي والعاصمة والفروانية والأحمدي والجهراء ومبارك الكبير. تجد تفاصيل كل منطقة في <a href="/painting-services/hawalli/" class="text-amber-700 hover:underline">صفحات المناطق</a>.</p>
+    </section>
+    <h2 class="text-xl font-extrabold text-slate-900">خدماتنا</h2>
+    <ul class="grid sm:grid-cols-2 gap-3">
+      {services.map((s) => <li><a href={`/${s.slug}/`} class="block bg-white p-4 rounded-xl border border-slate-200 hover:border-amber-400 text-sm font-bold">{s.short}</a></li>)}
+    </ul>
+  </div>
+</Layout>

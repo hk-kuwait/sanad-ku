@@ -1,0 +1,78 @@
+---
+import { services, getService } from '../data/services';
+import { areas } from '../data/areas';
+import { SITE, waLink } from '../lib/site';
+import { serviceExtra } from '../data/serviceExtra';
+const { s } = Astro.props;
+const extra = serviceExtra[s.slug] || [];
+const related = s.related.map(getService).filter(Boolean);
+---
+<article class="max-w-4xl mx-auto px-4 py-12 space-y-10">
+  <header class="space-y-4">
+    <span class="text-amber-700 font-bold text-xs bg-amber-50 px-3 py-1 rounded-full">{s.badge}</span>
+    <h1 class="text-3xl font-extrabold text-slate-900">{s.h1}</h1>
+    {s.intro.map((p) => <p class="text-slate-700 text-sm leading-loose">{p}</p>)}
+    <div class="flex flex-col sm:flex-row gap-3 pt-2">
+      <a href={`tel:${SITE.phone}`} class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-6 py-3 rounded-xl text-sm text-center">اتصل الآن: {SITE.phone}</a>
+      <a href={waLink(`السلام عليكم، أرغب بمعاينة مجانية لخدمة: ${s.short}`)} target="_blank" rel="noopener noreferrer" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-6 py-3 rounded-xl text-sm text-center">واتساب مباشر</a>
+    </div>
+  </header>
+
+  <section class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+    <h2 class="text-xl font-extrabold text-slate-900 mb-4">مميزات الخدمة</h2>
+    <ul class="list-disc pr-5 space-y-2 text-sm text-slate-700">{s.benefits.map((b) => <li>{b}</li>)}</ul>
+  </section>
+
+  <section class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+    <h2 class="text-xl font-extrabold text-slate-900 mb-4">مراحل العمل خطوة بخطوة</h2>
+    <ol class="list-decimal pr-5 space-y-2 text-sm text-slate-700">{s.steps.map((b) => <li>{b}</li>)}</ol>
+  </section>
+
+  <section class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+    <h2 class="text-xl font-extrabold text-slate-900 mb-4">المواد والأنواع المستخدمة</h2>
+    <ul class="list-disc pr-5 space-y-2 text-sm text-slate-700">{s.materials.map((b) => <li>{b}</li>)}</ul>
+  </section>
+
+  {extra.map((x) => (
+    <section class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+      <h2 class="text-xl font-extrabold text-slate-900 mb-3">{x.h}</h2>
+      <p class="text-sm text-slate-700 leading-loose">{x.p}</p>
+    </section>
+  ))}
+
+  <section class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+    <h2 class="text-xl font-extrabold text-slate-900 mb-4">الأسعار التقريبية</h2>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm text-right">
+        <thead><tr class="border-b border-slate-200 text-slate-500"><th class="py-2">البند</th><th class="py-2">السعر</th></tr></thead>
+        <tbody>{s.prices.map(([k, v]) => <tr class="border-b border-slate-100"><td class="py-2.5 font-semibold text-slate-800">{k}</td><td class="py-2.5 text-slate-700">{v}</td></tr>)}</tbody>
+      </table>
+    </div>
+    <p class="text-xs text-slate-600 mt-4 leading-loose">مكتبنا: {SITE.address.full}. المعاينة مجانية ويصلك الفريق إلى موقعك في جميع مناطق الكويت.</p>
+    <p class="text-[11px] text-slate-500 mt-3">* الأسعار تقديرية ويثبّت السعر النهائي بعد المعاينة المجانية في موقعك.</p>
+  </section>
+
+  <section>
+    <h2 class="text-xl font-extrabold text-slate-900 mb-4">أسئلة شائعة</h2>
+    <div class="space-y-3">
+      {s.faqs.map((f) => (
+        <details class="bg-white p-4 rounded-xl border border-slate-200">
+          <summary class="cursor-pointer"><h3 class="inline font-bold text-sm text-slate-900">{f.q}</h3></summary>
+          <p class="text-sm text-slate-700 leading-loose mt-2">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section>
+    <h2 class="text-xl font-extrabold text-slate-900 mb-4">خدمات أخرى قد تهمك</h2>
+    <div class="grid sm:grid-cols-3 gap-3">
+      {related.map((r) => <a href={`/${r.slug}/`} class="bg-white p-4 rounded-xl border border-slate-200 hover:border-amber-400 text-sm font-bold text-slate-900">{r.short}</a>)}
+    </div>
+    <p class="text-xs text-slate-600 mt-4 leading-loose">
+      نخدم جميع مناطق الكويت:
+      {areas.map((a, i) => <Fragment><a href={`/painting-services/${a.slug}/`} class="text-amber-700 hover:underline">{a.name}</a>{i < areas.length - 1 ? ' - ' : ''}</Fragment>)}.
+      اقرأ أيضاً <a href="/blog/" class="text-amber-700 hover:underline">مدونتنا</a> و<a href="/gallery/" class="text-amber-700 hover:underline">معرض أعمالنا</a>.
+    </p>
+  </section>
+</article>

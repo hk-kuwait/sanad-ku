@@ -1,0 +1,115 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Calculator from '../components/Calculator.jsx';
+import BookingForm from '../components/BookingForm.jsx';
+import BeforeAfter from '../components/BeforeAfter.jsx';
+import { services } from '../data/services';
+import { areas } from '../data/areas';
+import { SITE, waLink } from '../lib/site';
+import { websiteSchema, faqSchema } from '../lib/seo';
+
+const faqs = [
+  { q: 'هل المعاينة مجانية؟', a: 'نعم، المعاينة مجانية في جميع مناطق الكويت وبدون التزام.' },
+  { q: 'ما المناطق التي تخدمونها؟', a: 'نخدم حولي والعاصمة والفروانية والأحمدي والجهراء ومبارك الكبير وصباح السالم.' },
+  { q: 'كيف أعرف تكلفة الصبغ؟', a: 'تستطيع استخدام حاسبة الموقع للحصول على تقدير مبدئي، ويثبّت السعر النهائي بعد المعاينة.' },
+  { q: 'هل تنفذون ديكورات بديل الرخام والجبس بورد؟', a: 'نعم، نركب بديل الرخام والخشب والجبس بورد وورق الجدران ضمن خدماتنا.' },
+];
+const why = [
+  ['معاينة مجانية', 'نزورك ونقيس ونقدم تقديراً واضحاً قبل أي التزام.'],
+  ['فريق محترف', 'صباغون وفنيون بخبرة في التشطيبات الحديثة.'],
+  ['التزام بالمواعيد', 'نتفق على موعد التسليم ونلتزم به.'],
+  ['نظافة بعد التسليم', 'نترك الموقع نظيفاً بعد الانتهاء.'],
+];
+const schema = [websiteSchema(), faqSchema(faqs)];
+---
+<Layout
+  title="شركة سند الكويت | صباغ منازل وأصباغ وديكورات الكويت"
+  description="شركة سند الكويت لتشطيبات المباني، صباغ منازل وفلل، تركيب بديل الرخام والخشب والجبس بورد وورق الجدران. اتصل للمعاينة المجانية."
+  schema={schema}
+>
+  <section class="bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-white py-16 md:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+      <div class="space-y-6">
+        <span class="bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs px-3.5 py-1.5 rounded-full font-semibold inline-block">أفضل صباغ منازل وفلل في الكويت</span>
+        <h1 class="text-3xl md:text-5xl font-extrabold leading-tight">شركة <span class="text-amber-400">سند الكويت</span> للأصباغ والديكور</h1>
+        <p class="text-slate-300 text-sm md:text-base leading-loose">نقدم خدمات صباغة المنازل والشقق والفلل مع أحدث الديكورات العصرية (بديل الرخام، بديل الخشب، ورق الجدران، والجبس بورد) بأعلى معايير الجودة وبأيدي صباغين محترفين.</p>
+        <div class="flex flex-col sm:flex-row gap-3 pt-2">
+          <a href={`tel:${SITE.phone}`} class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-7 py-3.5 rounded-xl shadow-lg text-sm text-center transition">اتصال سريع: {SITE.phone}</a>
+          <a href={waLink()} target="_blank" rel="noopener noreferrer" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-7 py-3.5 rounded-xl shadow-lg text-sm text-center transition">واتساب مباشر</a>
+        </div>
+      </div>
+      <BeforeAfter client:visible />
+    </div>
+  </section>
+
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <h2 class="text-2xl font-extrabold text-slate-900 mb-2">خدماتنا المتخصصة في الكويت</h2>
+        <p class="text-slate-600 text-sm">انتقل إلى صفحة الخدمة لمعرفة التفاصيل ومراحل العمل والأسعار التقريبية.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {services.map((s) => (
+          <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 hover:shadow-md transition">
+            <h3 class="font-bold text-lg text-slate-900 mb-2">{s.short}</h3>
+            <p class="text-slate-600 text-xs leading-loose mb-4">{s.description}</p>
+            <a href={`/${s.slug}/`} class="text-amber-700 font-bold text-xs hover:underline">تفاصيل {s.short} ←</a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 bg-slate-100 border-t border-slate-200">
+    <div class="max-w-5xl mx-auto px-4">
+      <h2 class="text-2xl font-extrabold text-slate-900 text-center mb-8">لماذا شركة سند الكويت؟</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {why.map(([t, d]) => (
+          <div class="bg-white p-5 rounded-xl border border-slate-200">
+            <h3 class="font-bold text-sm text-slate-900 mb-1">{t}</h3>
+            <p class="text-xs text-slate-600 leading-loose">{d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 bg-white border-t border-slate-200">
+    <div class="max-w-4xl mx-auto px-4 space-y-4">
+      <h2 class="text-2xl font-extrabold text-slate-900">كيف تختار صباغاً مناسباً في الكويت؟</h2>
+      <p class="text-sm text-slate-700 leading-loose">اختيار الصباغ لا يقتصر على السعر. اسأل عن طريقة تجهيز الجدران قبل الدهان، وعدد الوجوه، ونوع المواد المستخدمة، وهل تشمل الخدمة تغطية الأثاث والتنظيف بعد التسليم. المعاينة في الموقع أهم من أي تقدير عبر الهاتف، لأن حالة الجدران من رطوبة وتشققات تغيّر خطة العمل والتكلفة.</p>
+      <p class="text-sm text-slate-700 leading-loose">في شركة سند الكويت نقدم معاينة مجانية ونشرح لك الخطوات والمواد قبل البدء. وإذا كنت تخطط لتشطيب كامل فيمكننا تنفيذ الصبغ وورق الجدران وبديل الرخام والجبس بورد بخطة واحدة. مكتبنا في حولي، قطعة 11، شارع شرحبيل، مجمع دلال، مكتب 14.</p>
+    </div>
+  </section>
+
+  <section class="py-16 bg-white border-t border-slate-200">
+    <div class="max-w-4xl mx-auto px-4"><Calculator client:visible /></div>
+  </section>
+
+  <section class="py-16 bg-slate-50 border-t border-slate-200">
+    <div class="max-w-5xl mx-auto px-4">
+      <h2 class="text-2xl font-extrabold text-slate-900 text-center mb-8">المناطق التي نخدمها</h2>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+        {areas.map((a) => <a href={`/painting-services/${a.slug}/`} class="bg-white p-4 rounded-xl border border-slate-200 hover:border-amber-400 text-sm font-bold text-center">صباغ {a.name}</a>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 bg-white border-t border-slate-200">
+    <div class="max-w-3xl mx-auto px-4">
+      <h2 class="text-2xl font-extrabold text-slate-900 text-center mb-8">أسئلة شائعة</h2>
+      <div class="space-y-3">
+        {faqs.map((f) => (
+          <details class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+            <summary class="cursor-pointer"><h3 class="inline font-bold text-sm text-slate-900">{f.q}</h3></summary>
+            <p class="text-sm text-slate-700 leading-loose mt-2">{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 bg-slate-100 border-t border-slate-200">
+    <div class="max-w-3xl mx-auto px-4"><BookingForm client:visible /></div>
+  </section>
+</Layout>

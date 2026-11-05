@@ -1,0 +1,7 @@
+---
+import Layout from '../layouts/Layout.astro';
+import AdminPanel from '../components/AdminPanel.jsx';
+---
+<Layout title="لوحة الإدارة | شركة سند الكويت" description="لوحة إدارة المحتوى" noindex={true}>
+  <AdminPanel client:only="react" />
+</Layout>

@@ -1,0 +1,48 @@
+---
+import { SITE, NAV } from '../lib/site';
+const path = Astro.url.pathname;
+---
+<header class="bg-slate-900 text-white sticky top-0 z-40 shadow-md border-b border-amber-500/30">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
+    <a href="/" class="flex items-center gap-3" aria-label="شركة سند الكويت - الرئيسية">
+      <div class="w-10 h-10 bg-amber-500 rounded-lg flex items-center justify-center font-extrabold text-slate-950 text-lg shadow">س</div>
+      <div>
+        <div class="text-base md:text-lg font-extrabold text-amber-400">شركة سند الكويت</div>
+        <p class="text-[10px] text-slate-300">للأصباغ والديكور وإنهاء المباني</p>
+      </div>
+    </a>
+
+    <nav class="hidden xl:flex items-center gap-4 text-sm font-medium" aria-label="القائمة الرئيسية">
+      {NAV.map((n) => (
+        <a href={n.href} class:list={['hover:text-amber-400 transition', path === n.href && 'text-amber-400 font-bold']}>{n.label}</a>
+      ))}
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <a href={`tel:${SITE.phone}`} class="hidden sm:flex bg-amber-500 hover:bg-amber-600 text-slate-950 px-3.5 py-2 rounded-full text-xs font-bold items-center gap-1.5 shadow transition">
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        {SITE.phone}
+      </a>
+      <a href="/admin/" rel="nofollow" class="text-xs bg-slate-800 text-slate-300 px-2.5 py-2 rounded border border-slate-700 hover:bg-slate-700 transition">الإدارة</a>
+      <button id="menu-btn" class="xl:hidden text-slate-300 p-1" aria-label="القائمة" aria-expanded="false" aria-controls="mobile-menu">
+        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-menu" class="hidden xl:hidden bg-slate-950 border-b border-amber-500/20 px-4 pt-2 pb-6 text-sm">
+    {NAV.map((n) => <a href={n.href} class="block py-2.5 text-slate-200 border-b border-slate-900">{n.label}</a>)}
+  </div>
+</header>
+
+<script is:inline>
+  (function () {
+    var b = document.getElementById('menu-btn');
+    var m = document.getElementById('mobile-menu');
+    if (!b || !m) return;
+    b.addEventListener('click', function () {
+      var hidden = m.classList.toggle('hidden');
+      b.setAttribute('aria-expanded', String(!hidden));
+    });
+  })();
+</script>

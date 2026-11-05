@@ -1,0 +1,18 @@
+---
+const { items } = Astro.props;
+---
+<nav aria-label="مسار التنقل" class="bg-slate-100 py-2.5 px-4 text-xs border-b border-slate-200">
+  <ol class="max-w-7xl mx-auto flex flex-wrap items-center gap-2 text-slate-600">
+    <li><a href="/" class="hover:text-amber-600 transition">الرئيسية</a></li>
+    {items.map((item, i) => (
+      <Fragment>
+        <li aria-hidden="true" class="text-slate-400">/</li>
+        <li>
+          {i === items.length - 1
+            ? <span class="font-semibold text-slate-900" aria-current="page">{item.name}</span>
+            : <a href={item.url} class="hover:text-amber-600 transition">{item.name}</a>}
+        </li>
+      </Fragment>
+    ))}
+  </ol>
+</nav>

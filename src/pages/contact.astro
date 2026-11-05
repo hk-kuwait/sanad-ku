@@ -1,0 +1,24 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { SITE, waLink } from '../lib/site';
+---
+<Layout
+  title="اتصل بنا واحصل على معاينة مجانية | شركة سند الكويت"
+  description="تواصل مع فريق شركة سند الكويت للأصباغ والديكور على الرقم 65587628 لحجز موعد معاينة مجانية."
+  breadcrumbItems={[{ name: 'اتصل بنا', url: '/contact/' }]}
+>
+  <div class="max-w-3xl mx-auto px-4 py-12">
+    <div class="bg-white p-8 rounded-2xl border border-slate-200 text-center space-y-6 shadow-sm">
+      <h1 class="text-2xl font-extrabold text-slate-900">تواصل معنا اليوم للمعاينة المجانية</h1>
+      <p class="text-slate-600 text-xs">فريقنا متواجد للرد على اتصالاتكم واستفساراتكم على مدار الساعة.</p>
+      <div class="text-sm text-slate-700 leading-loose">
+        <h2 class="font-bold text-slate-900 mb-1">عنوان المكتب</h2>
+        <p>{SITE.address.full}</p>
+      </div>
+      <div class="flex flex-col sm:flex-row justify-center gap-4 pt-2">
+        <a href={`tel:${SITE.phone}`} class="bg-amber-500 text-slate-950 font-bold px-8 py-3.5 rounded-xl text-xs">اتصال مباشر: {SITE.phone}</a>
+        <a href={waLink()} target="_blank" rel="noopener noreferrer" class="bg-emerald-600 text-white font-bold px-8 py-3.5 rounded-xl text-xs">واتساب مباشر</a>
+      </div>
+    </div>
+  </div>
+</Layout>

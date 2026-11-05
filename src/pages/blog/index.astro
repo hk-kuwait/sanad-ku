@@ -1,0 +1,34 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { supabase } from '../../lib/supabase';
+import { fmtDate } from '../../lib/site';
+
+let articles = [];
+if (supabase) {
+  const { data } = await supabase.from('articles').select('*').order('created_at', { ascending: false });
+  articles = data || [];
+}
+---
+<Layout
+  title="مدونة الديكور ونصائح الأصباغ في الكويت | سند الكويت"
+  description="مقالات ونصائح متخصصة في اختيارات ألوان الأصباغ، معالجة الرطوبة، وديكورات بديل الرخام والخشب."
+  breadcrumbItems={[{ name: 'المدونة', url: '/blog/' }]}
+>
+  <div class="max-w-4xl mx-auto px-4 py-12 space-y-6">
+    <h1 class="text-3xl font-extrabold text-slate-900 border-r-4 border-amber-500 pr-3">مدونة سند الكويت للأصباغ والديكور</h1>
+    {articles.length === 0 ? (
+      <div class="bg-white p-8 text-center rounded-xl border border-slate-200 text-slate-500 text-xs">لا توجد مقالات منشورة حالياً.</div>
+    ) : (
+      <div class="space-y-4">
+        {articles.map((art) => (
+          <article class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+            <time class="text-xs bg-amber-100 text-amber-800 px-3 py-1 rounded-full font-bold" datetime={art.published_at || art.created_at}>{fmtDate(art.published_at || art.created_at)}</time>
+            <h2 class="text-xl font-bold text-slate-900"><a href={`/blog/${art.slug}/`} class="hover:text-amber-600 transition">{art.title}</a></h2>
+            <p class="text-slate-600 text-xs leading-loose">{art.snippet || (art.content || '').substring(0, 120) + '...'}</p>
+            <a href={`/blog/${art.slug}/`} class="text-amber-700 font-bold text-xs">قراءة المقال كاملاً ←</a>
+          </article>
+        ))}
+      </div>
+    )}
+  </div>
+</Layout>
